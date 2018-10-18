@@ -1,0 +1,10 @@
+author: Scott D. Peckham
+doi: 10.1594/IEDA/100174
+email: scott.peckham@colorado.edu
+license: Apache
+summary: "InfilRichards1D is an infiltration process component included
+  within the spatially distributed hydrologic model TopoFlow. It uses
+  the 1D Richards method for modeling how water on the ground is
+  absorbed into the soil."
+url: http://csdms.colorado.edu/wiki/Model_help:TopoFlow-Infiltration-Richards_1D
+version: 3.1.0

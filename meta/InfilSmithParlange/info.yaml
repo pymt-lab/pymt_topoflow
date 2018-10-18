@@ -1,0 +1,10 @@
+author: Scott D. Peckham
+doi: 10.1594/IEDA/100174
+email: scott.peckham@colorado.edu
+license: Apache
+summary: "InfilSmithParlange is an infiltration process component included
+  within the spatially distributed hydrologic model TopoFlow. It uses
+  the Smith-Parlange method for modeling how water on the ground is
+  absorbed into the soil."
+url: http://csdms.colorado.edu/wiki/Model_help:TopoFlow-Infiltration-Smith-Parlange
+version: 3.1.0
