@@ -1,0 +1,23 @@
+build:
+  define_macros: []
+  extra_compile_args: []
+  include_dirs: []
+  libraries: []
+  library_dirs: []
+  undef_macros: []
+info:
+  github_username: mcflugen
+  plugin_author: Eric Hutton
+  plugin_license: MIT
+  summary: PyMT plugins for TopoFlow components
+library:
+  entry_point:
+  - InfilGreenAmpt=topoflow.components.infil_green_ampt:infil_component
+  - InfilRichards1D=topoflow.components.infil_richards_1D:infil_component
+  - InfilSmithParlange=topoflow.components.infil_smith_parlange:infil_component
+  language: python
+  register: ''
+plugin:
+  name: topoflow
+  requirements:
+  - topoflow

@@ -1,0 +1,50 @@
+language: generic
+os:
+- osx
+- linux
+env:
+  matrix:
+  - TRAVIS_PYTHON_VERSION="2.7"
+  - TRAVIS_PYTHON_VERSION="3.6"
+  - TRAVIS_PYTHON_VERSION="3.7"
+  global:
+  - CONDA_PREFIX=$HOME/miniconda
+  - MINICONDA_URL_BASE="https://repo.continuum.io/miniconda/Miniconda3-latest"
+sudo: false
+before_install:
+- |
+  if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    brew remove --force $(brew list)
+    brew cleanup -s
+    rm -rf $(brew --cache)
+  fi
+install:
+- |
+  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    OS="MacOSX-x86_64"
+  else
+    OS="Linux-x86_64"
+  fi
+- curl $MINICONDA_URL_BASE-$OS.sh > $HOME/minconda.sh
+- bash $HOME/minconda.sh -b -p $CONDA_PREFIX
+- export PATH="$CONDA_PREFIX/bin:$PATH"
+- hash -r
+- conda config --set always_yes yes --set changeps1 no
+- conda config --add channels conda-forge
+- conda create -n _testing python=$TRAVIS_PYTHON_VERSION
+- source activate _testing
+- conda install -q conda-build anaconda-client
+- conda install -q --file=requirements.txt
+- conda install -q bmi-tester model_metadata
+script:
+- python setup.py develop
+- python -c 'import pymt_topoflow'
+- |
+  config_file=$(mmd-stage InfilGreenAmpt . > MANIFEST && mmd-query InfilGreenAmpt --var=run.config_file.path)
+  bmi-test pymt_topoflow.bmi:InfilGreenAmpt --infile=$config_file --manifest=MANIFEST -v
+- |
+  config_file=$(mmd-stage InfilRichards1D . > MANIFEST && mmd-query InfilRichards1D --var=run.config_file.path)
+  bmi-test pymt_topoflow.bmi:InfilRichards1D --infile=$config_file --manifest=MANIFEST -v
+- |
+  config_file=$(mmd-stage InfilSmithParlange . > MANIFEST && mmd-query InfilSmithParlange --var=run.config_file.path)
+  bmi-test pymt_topoflow.bmi:InfilSmithParlange --infile=$config_file --manifest=MANIFEST -v
